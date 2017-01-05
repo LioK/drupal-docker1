@@ -15,7 +15,7 @@ case $1 in
     sudo chmod +x /usr/local/bin/docker-compose
     unzip ./code.zip -d .
     cd code
-    echo "Installation complete. Run 'install.sh start' to start the Drupal cluster."
+    echo "Installation complete. Run 'install.sh create' to build the Drupal cluster."
 
   create)
 
