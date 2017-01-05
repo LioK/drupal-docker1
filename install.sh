@@ -14,35 +14,40 @@ case $1 in
     sudo curl -L "https://github.com/docker/compose/releases/download/1.9.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
     sudo chmod +x /usr/local/bin/docker-compose
     unzip ./code.zip -d .
-    cd code
+    mv ./code/docker-compose.yml .
     echo "Installation complete. Run 'install.sh create' to build the Drupal cluster."
+  ;;
 
   create)
-
-    sudo docker-compose up
+    sudo docker-compose up -d
+  ;;
 
   start)
-
+    
     sudo docker-compose pause haproxy
     sudo docker-compose pause drupal1
     sudo docker-compose pause drupal2
     sudo docker-compose pause drupal3
     sudo docker-compose pause db
+  ;;
 
   stop)
 
+    sudo docker-compose unpause db
     sudo docker-compose unpause haproxy
     sudo docker-compose unpause drupal1
     sudo docker-compose unpause drupal2
     sudo docker-compose unpause drupal3
-    sudo docker-compose unpause db
+  ;;
 
   destroy)
 
     sudo docker-compose down --volumes
+  ;;
 
   *)
-  echo "Usage: ${JOB}_ctl {install|create|start|stop|destroy}" ;;
+  echo "Usage: ${JOB}_ctl {install|create|start|stop|destroy}"
+  ;;
 
 esac
 exit 0
