@@ -23,11 +23,19 @@ case $1 in
 
   start)
 
-    sudo docker-compose start
+    sudo docker-compose pause haproxy
+    sudo docker-compose pause drupal1
+    sudo docker-compose pause drupal2
+    sudo docker-compose pause drupal3
+    sudo docker-compose pause db
 
   stop)
 
-    sudo docker-compose stop    
+    sudo docker-compose unpause haproxy
+    sudo docker-compose unpause drupal1
+    sudo docker-compose unpause drupal2
+    sudo docker-compose unpause drupal3
+    sudo docker-compose unpause db
 
   destroy)
 
