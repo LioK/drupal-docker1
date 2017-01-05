@@ -1,0 +1,65 @@
+version: '2'
+
+services:
+  db:
+    image: mysql
+    volumes:
+      - ./code/mysql:/var/lib/mysql
+    restart: always
+    environment:
+       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+       MYSQL_DATABASE: drupaldb
+       MYSQL_USER: drupal
+       MYSQL_PASSWORD: drupal
+
+  haproxy:
+    image: haproxy
+    depends_on:
+      - db
+      - drupal1
+      - drupal2
+      - drupal3
+    links:
+      - drupal1
+      - drupal2
+      - drupal3
+    ports:
+      - "80:80"
+    volumes:
+      - ./code/haproxy:/usr/local/etc/haproxy
+
+  drupal1:
+    image: drupal:7.53
+    depends_on:
+      - db
+    restart: always
+    links:
+      - db
+    expose:
+      - "80"
+    volumes:
+      - ./code/drupal:/var/www
+
+  drupal2:
+    image: drupal:7.53
+    depends_on:
+      - db
+    restart: always
+    links:
+      - db
+    expose:
+      - "80"
+    volumes:
+      - ./code/drupal:/var/www
+
+  drupal3:
+    image: drupal:7.53
+    depends_on:
+      - db
+    restart: always
+    links:
+      - db
+    expose:
+      - "80"
+    volumes:
+      - ./code/drupal:/var/www

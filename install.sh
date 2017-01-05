@@ -14,7 +14,6 @@ case $1 in
     sudo curl -L "https://github.com/docker/compose/releases/download/1.9.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
     sudo chmod +x /usr/local/bin/docker-compose
     unzip ./code.zip -d .
-    mv ./code/docker-compose.yml .
     echo "Installation complete. Run 'install.sh create' to build the Drupal cluster."
   ;;
 
@@ -22,7 +21,7 @@ case $1 in
     sudo docker-compose up -d
   ;;
 
-  start)
+  stop)
     
     sudo docker-compose pause haproxy
     sudo docker-compose pause drupal1
@@ -31,7 +30,7 @@ case $1 in
     sudo docker-compose pause db
   ;;
 
-  stop)
+  start)
 
     sudo docker-compose unpause db
     sudo docker-compose unpause haproxy
